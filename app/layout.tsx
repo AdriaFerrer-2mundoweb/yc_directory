@@ -66,7 +66,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={workSans.variable}>
+      <body className={`${workSans.variable} font-work-sans bg-white-100`}>
         {children}
         <Toaster />
       </body>
