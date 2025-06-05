@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
+import { Toaster } from "sonner";
 
 const workSans = localFont({
   src: [
@@ -35,6 +36,11 @@ const workSans = localFont({
       style: "normal",
     },
     {
+      path: "./fonts/WorkSans-Black.ttf",
+      weight: "900",
+      style: "normal",
+    },
+    {
       path: "./fonts/WorkSans-Thin.ttf",
       weight: "200",
       style: "normal",
@@ -60,10 +66,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={`${workSans.variable} antialiased`}
-      >
+      <body className={workSans.variable}>
         {children}
+        <Toaster />
       </body>
     </html>
   );
