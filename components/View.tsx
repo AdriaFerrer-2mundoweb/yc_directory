@@ -1,9 +1,15 @@
 import { client } from '@/sanity/lib/client';
 import Ping from './Ping'
 import { STARTUP_VIEWS_QUERY } from '@/sanity/lib/queries';
+import { writeClient } from '@/sanity/lib/write-client';
+import { headers } from 'next/headers';
 
 const View = async ({ id }: { id: string }) => {
   const { views: totalViews } = await client.withConfig({ useCdn: false }).fetch(STARTUP_VIEWS_QUERY, { id });
+
+  // Trigger headers to ensure this runs after response
+  headers();
+  await writeClient.patch(id).set({ views: totalViews + 1 }).commit();
 
   return (
     <div className="view-container">
@@ -12,7 +18,7 @@ const View = async ({ id }: { id: string }) => {
         </div>
 
         <p className="view-text">
-            <span className="font-black">{totalViews} view{totalViews > 1 ? 's' : ''}</span>
+            <span className="font-black">{totalViews} view{totalViews !== 1 ? 's' : ''}</span>
         </p>
     </div>
   )
