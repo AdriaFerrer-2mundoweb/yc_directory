@@ -5,7 +5,7 @@ import { BadgePlus, LogOut } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 const Navbar = async () => {
-  const session = await auth();
+  const session = await auth(); // get the session of a user
 
   return (
     <header className="px-5 py-3 bg-white shadow-sm font-work-sans">
@@ -15,27 +15,27 @@ const Navbar = async () => {
         </Link>
 
         <div className="flex items-center gap-5 text-black">
-          {session && session?.user ? (
+          {session && session?.user ? ( // if the user is logged in
             <>
-              <Link href="/startup/create">
+              <Link href="/startup/create"> {/* link to the create startup page */}
                 <span className="max-sm:hidden">Create</span>
                 <BadgePlus className="size-6 sm:hidden" />
               </Link>
 
-              <form
+              <form 
                 action={async () => {
-                  "use server";
+                  "use server"; // server action to logout the user
 
-                  await signOut({ redirectTo: "/" });
+                  await signOut({ redirectTo: "/" }); // sign out the user and redirect to the home page, it's async
                 }}
-              >
+              >  {/* form to logout the user */}
                 <button type="submit">
                   <span className="max-sm:hidden">Logout</span>
                   <LogOut className="size-6 sm:hidden text-red-500" />
                 </button>
               </form>
 
-              <Link href={`/user/${session?.id}`}>
+              <Link href={`/user/${session?.id}`}> {/* link to the user's profile page */}
                 <Avatar className="size-10">
                   <AvatarImage
                     src={session?.user?.image || ""}
@@ -50,7 +50,7 @@ const Navbar = async () => {
               action={async () => {
                 "use server";
 
-                await signIn("github");
+                await signIn("github"); // sign in the user with github, it's async
               }}
             >
               <button type="submit">Login</button>
